@@ -1,35 +1,35 @@
 ﻿namespace SMParser;
 
 public enum SMNoteType {
-    Empty = (int)'0',
-    Tap = (int)'1',
-    Head = (int)'2',
-    Tail = (int)'3',
-    Mine = (int)'M',
-    Fake = (int)'F'
+    Empty,
+    Tap,
+    Head,
+    Tail,
+    Mine,
+    Fake
 };
 
 public struct SMNote {
     public float beat;
     public int lane;
     public SMNoteType type;
-    
-    int GetNoteType() {
-        switch (type)
-        {
-            case SMNoteType.Tap:
-                return 1;
-            case SMNoteType.Head:
-                return 2;
-            case SMNoteType.Tail:
-                return 3;
-            case SMNoteType.Mine:
-                return 4;
-            case SMNoteType.Fake:
-                return 5;
-        }
 
-        return 0;
+    public static SMNoteType ConvertCharToType(char c)
+    {
+        switch (c)
+        {
+            case '1':
+                return SMNoteType.Tap;
+            case '2':
+                return SMNoteType.Head;
+            case '3':
+                return SMNoteType.Tail;
+            case 'M':
+                return SMNoteType.Mine;
+            case 'F':
+                return SMNoteType.Fake;
+        }
+        return SMNoteType.Empty;
     }
     
     public override string ToString()

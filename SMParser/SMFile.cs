@@ -42,14 +42,9 @@ public class SMFile
                 SMNote note = new SMNote();
                 note.beat = beat;
                 note.lane = j;
-                SMNoteType type;
-                if (!Enum.TryParse(c.ToString(), out type))
-                {
-                    Console.WriteLine("[WARN] Unknown note type: " + c + " at beat: " + beat);
-                    continue;
-                }
+                SMNoteType type = SMNote.ConvertCharToType(c);
                         
-                if (c == (int)SMNoteType.Empty)
+                if (type == SMNoteType.Empty)
                     continue;
                         
                 note.type = type;
@@ -87,7 +82,8 @@ public class SMFile
             if (line.Contains(":"))
             {
                 string value = line.Substring(0, line.IndexOf(":", StringComparison.Ordinal)).Trim();
-
+                if (line.Contains("#NOTES"))
+                    _index = 0;
                 switch (_index)
                 {
                     case 2:
@@ -137,6 +133,9 @@ public class SMFile
         
         if (v.Contains(";"))
             v = v.Substring(0, v.IndexOf(";", StringComparison.Ordinal));
+
+        if (v.Contains(","))
+            v = v.Replace(",", "");
         
         string[] bpms = v.Split(',');
         
@@ -179,7 +178,7 @@ public class SMFile
                 continue;
             }
             
-            if (!line.Contains(";"))
+            if (line.Contains("//"))
                 return; // End of metadata
 
             if (line.StartsWith("#"))

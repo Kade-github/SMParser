@@ -7,6 +7,6 @@ public class SMTimingPoint
     
     public override string ToString()
     {
-        return $"Timing Point: {bpm} BPM at {startBeat} beat.";
+        return $"Timing Point: {bpm} BPM at beat: {startBeat}.";
     }
 }
