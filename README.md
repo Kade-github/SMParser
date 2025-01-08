@@ -13,7 +13,7 @@ DO IT YOURSELF!!!
 ```c#
 var smfile = new SMFile("path-to-your.sm");
 
-Console.WriteLine(smFile); // outputs the title, and artist. Along with the difficulty count.
+Console.WriteLine(smfile); // outputs the title, and artist. Along with the difficulty count.
 
 var difficulties = smfile.difficulties; // SMDifficulty
 var timingPoints = smfile.timingPoints; // SMTimingPoint
