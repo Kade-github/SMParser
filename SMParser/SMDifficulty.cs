@@ -14,6 +14,24 @@ public struct SMNote {
     public int lane;
     public SMNoteType type;
     
+    int GetNoteType() {
+        switch (type)
+        {
+            case SMNoteType.Tap:
+                return 1;
+            case SMNoteType.Head:
+                return 2;
+            case SMNoteType.Tail:
+                return 3;
+            case SMNoteType.Mine:
+                return 4;
+            case SMNoteType.Fake:
+                return 5;
+        }
+
+        return 0;
+    }
+    
     public override string ToString()
     {
         return $"Note: {type} at {beat} beat on lane {lane}.";
