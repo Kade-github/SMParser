@@ -38,15 +38,22 @@ public struct SMNote {
     }
 };
 
+public class SMMeasure
+{
+    public int Length;
+    public int StartBeat;
+}
+
 public class SMDifficulty
 {
     public string name = "";
     public string charter = "";
+    public string type = "";
 
     public List<SMNote> notes = new List<SMNote>();
     
     public override string ToString()
     {
-        return $"Difficulty: {name} by {charter}. {notes.Count} notes.";
+        return $"Difficulty: {name} by {charter}. {notes.Count} notes. Type: {type}";
     }
 }
