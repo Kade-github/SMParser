@@ -322,13 +322,11 @@ public class SMFile
 
             if (state == 1) // bpms can be newline separated
             {
-                if (line.Contains("#"))
+                if (line.Contains("#") || line.Contains(";"))
                 {
                     state = 0;
                     continue;
                 }
-                if (!line.Contains(";"))
-                    state = 0;
                 
                 ParseBPMS(line);
                 line = _reader.ReadLine();
