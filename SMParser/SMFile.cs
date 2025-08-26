@@ -98,7 +98,12 @@ public class SMFile
                         // ReSharper disable once CompareOfFloatsByEqualityOperator
                         if (note.beat == rowBeat)
                         {
-                            directions[note.lane] = note.type switch
+                            var ln = note.lane;
+
+                            if (ln >= directions.Count)
+                                ln -= 4;
+                            
+                            directions[ln] = note.type switch
                             {
                                 SMNoteType.Tap => "1",
                                 SMNoteType.Head => "2",
