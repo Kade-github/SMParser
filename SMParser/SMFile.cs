@@ -14,9 +14,11 @@ public class SMFile
     public List<SMDifficulty> difficulties;
     public List<SMTimingPoint> timingPoints;
 
-    public SMFile(string filepath)
+    public SMFile(string filepath = "")
     {
         _filepath = filepath;
+        if (filepath.Length <= 0)
+            return;
         FileStream _fileStream = new FileStream(filepath, FileMode.Open);
         StreamReader _reader = new StreamReader(_fileStream);
         
@@ -59,6 +61,8 @@ public class SMFile
         // Write difficulties
         foreach (var diff in difficulties)
         {
+            if (diff.notes.Count == 0) 
+                continue;
             writer.WriteLine($"//--------------- {diff.type} - {diff.charter} ----------------");
             writer.WriteLine("#NOTES:");
             writer.WriteLine("     {0}:", diff.type);
@@ -88,10 +92,9 @@ public class SMFile
                 for (int row = startRow; row <= lastRow; row += rowSpacing)
                 {
                     float rowBeat = row / 48.0f;
-                    System.Collections.Generic.List<string> directions = new System.Collections.Generic.List<string> { "0", "0", "0", "0"};
+                    List<string> directions = new List<string> { "0", "0", "0", "0"};
                     if (diff.type.Contains("double"))
-                        directions = new System.Collections.Generic.List<string> { "0", "0", "0", "0", 
-                            "0", "0", "0", "0"};
+                        directions = new List<string> { "0", "0", "0", "0", "0", "0", "0", "0"};
                     
                     foreach (var note in measureLines)
                     {
@@ -144,27 +147,17 @@ public class SMFile
         {
             float beatRow = note.beat * 48.0f;
             float snap = 0.0f;
-
-            if (beatRow % 48 == 0) // 4th
-                snap = 1.0f;
-            else if (beatRow % 24 == 0) // 8th
-                snap = 2.0f;
-            else if (beatRow % 16 == 0) // 12th
-                snap = 3.0f;
-            else if (beatRow % 12 == 0) // 16th
-                snap = 4.0f;
-            else if (beatRow % 8 == 0) // 24th
-                snap = 6.0f;
-            else if (beatRow % 6 == 0) // 32nd
-                snap = 8.0f;
-            else if (beatRow % 4 == 0) // 48th
-                snap = 12.0f;
-            else if (beatRow % 3 == 0) // 64th
-                snap = 16.0f;
-            else if (beatRow % 2 == 0) // 96th
-                snap = 24.0f;
-            else // 192nd
-                snap = 48.0f;
+            
+            if (beatRow % 48 == 0)      snap = 1.0f;  // 4th
+            else if (beatRow % 24 == 0) snap = 2.0f;  // 8th
+            else if (beatRow % 16 == 0) snap = 3.0f;  // 12th
+            else if (beatRow % 12 == 0) snap = 4.0f;  // 16th
+            else if (beatRow % 8 == 0)  snap = 6.0f;  // 24th
+            else if (beatRow % 6 == 0)  snap = 8.0f;  // 32nd
+            else if (beatRow % 4 == 0)  snap = 12.0f; // 48th
+            else if (beatRow % 3 == 0)  snap = 16.0f; // 64th
+            else if (beatRow % 2 == 0)  snap = 24.0f; // 96th
+            else                         snap = 48.0f; // 192nd
             
             snaps.Add(snap);
             
