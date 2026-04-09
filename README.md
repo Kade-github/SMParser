@@ -17,4 +17,6 @@ Console.WriteLine(smfile); // outputs the title, and artist. Along with the diff
 
 var difficulties = smfile.difficulties; // SMDifficulty
 var timingPoints = smfile.timingPoints; // SMTimingPoint
+
+smFile.Save("now-its-MY.sm"); // You can also SAVE files!!
 ```
